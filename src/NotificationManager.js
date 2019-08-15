@@ -28,7 +28,7 @@ class NotificationManager extends EventEmitter {
   create(notify) {
     const id = createUUID();
     const defaultNotify = {
-      id: id,
+      id,
       type: 'info',
       title: null,
       message: null,
@@ -100,7 +100,7 @@ class NotificationManager extends EventEmitter {
     }
   }
 
-   removeAll() {
+  removeAll() {
     this.listNotify = [];
     this.emitChange();
   }

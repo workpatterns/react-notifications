@@ -4,11 +4,9 @@
   "description": "Notification component for ReactJS",
   "main": "lib/index.js",
   "scripts": {
-    "clean": "../node_modules/.bin/rimraf lib",
-    "build": "npm run clean && npm run build:js && npm run build:css",
-    "build:js": "WEBPACK_CONFIG=$(pwd)/webpack.config.js BABEL_DISABLE_CACHE=1 BABEL_ENV=production NODE_ENV=production ../node_modules/.bin/babel --out-dir='lib' --ignore='__test__/*' src",
-    "build:css": "node ../scripts/concatCssFiles $(pwd) && ../node_modules/.bin/rimraf lib-css",
-    "prepare": "npm run build"
+    "start": "NODE_ENV=development babel-node example/webpack.server.js --hot",
+    "lint": "NODE_ENV=development eslint .",
+    "build": "NODE_ENV=production gulp build"
   },
   "keywords": [
     "react-component",
@@ -20,8 +18,7 @@
   "dependencies": {
     "classnames": "^2.1.1",
     "prop-types": "^15.5.10",
-    "react-transition-group": "^1.2.0",
-    "rimraf": "^3.0.0"
+    "react-transition-group": "^1.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.0.1",
@@ -75,7 +72,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/workpatterns/react-notifications.git"
+    "url": "https://github.com/minhtranite/react-notifications.git"
   },
   "author": "Minh Tran",
   "license": "MIT",
