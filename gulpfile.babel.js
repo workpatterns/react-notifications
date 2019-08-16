@@ -12,7 +12,7 @@ import webpackConfig from './webpack.config';
 import exampleWebpackConfig from './example/webpack.config.babel';
 
 gulp.task('build:lib:clean', () => {
-  del.sync(['lib', 'dist']);
+  return del(['lib', 'dist']);
 });
 
 gulp.task('build:lib:babel', () => gulp
@@ -38,19 +38,18 @@ gulp.task('build:lib:copy', () => gulp
   .pipe(gulp.dest('lib'))
   .pipe(gulp.dest('dist')));
 
-gulp.task('build:lib', (callback) => {
-  runSequence(
+gulp.task('build:lib',
+  gulp.series(
     'build:lib:clean',
     'build:lib:babel',
     'build:lib:umd',
     'build:lib:style',
-    'build:lib:copy',
-    callback
-  );
-});
+    'build:lib:copy'
+  )
+);
 
 gulp.task('build:example:clean', () => {
-  del.sync(['example/dist']);
+  return del(['example/dist']);
 });
 
 gulp.task('build:example:webpack', () => gulp
@@ -62,17 +61,13 @@ gulp.task('build:example:copy', () => gulp
   .src(['example/app/*', '!example/app/*.{html,js}'], { nodir: true })
   .pipe(gulp.dest('example/dist')));
 
-gulp.task('build:example', (callback) => {
-  runSequence(
+gulp.task('build:example', gulp.series(
     'build:example:clean',
     'build:example:webpack',
-    'build:example:copy',
-    callback
-  );
-});
+    'build:example:copy'
+  )
+);
 
-gulp.task('build', (callback) => {
-  runSequence('build:lib', 'build:example', callback);
-});
+gulp.task('build', gulp.series('build:lib'));
 
-gulp.task('default', ['build']);
+gulp.task('default', gulp.series('build'));
